@@ -1,0 +1,24 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: jeffgrahamcodes
+# "service" is the name of this project. This will also be added to your AWS resource names.
+service: serverless-saas-backend
+provider:
+  name: aws
+  runtime: python3.9
+  region: us-east-1
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:*
+      Resource: arn:aws:dynamodb:us-east-1:*:table/Users
+
+functions:
+  app:
+    handler: main.handler
+    events:
+      - http:
+          path: /
+          method: get
+      - http:
+          path: register
+          method: post
